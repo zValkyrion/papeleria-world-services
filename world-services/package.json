@@ -1,0 +1,36 @@
+{
+  "name": "world-services",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "node scripts/extract-frames.js",
+    "dev": "next dev",
+    "prebuild": "node scripts/extract-frames.js",
+    "build": "next build",
+    "build:ci": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "canvas-confetti": "^1.9.4",
+    "framer-motion": "^12.40.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.17.0",
+    "next": "16.2.6",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "ffmpeg-static": "^5.2.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,7 @@
+# Large media files (not needed for deployment)
+*.mp4
+*.pdf
+
+# OS files
+.DS_Store
+Thumbs.db
