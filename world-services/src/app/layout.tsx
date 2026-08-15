@@ -32,7 +32,14 @@ export const metadata: Metadata = {
     "impresión premium",
     "anuncios volumétricos 3D",
     "sustratos rígidos",
-    "rotulado vehicular"
+    "rotulado vehicular",
+    "papelería y consumibles CDMX",
+    "tóners originales y compatibles",
+    "consumibles de oficina entrega 24 horas",
+    "equipo de cómputo para oficina",
+    "anuncios luminosos CDMX",
+    "letras volumétricas 3D iluminadas",
+    "muebles exhibidores retail"
   ],
   authors: [{ name: "WORLD SERVICES" }],
   robots: {

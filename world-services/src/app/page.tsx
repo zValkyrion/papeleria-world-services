@@ -6,7 +6,8 @@ import ScrollVideo from "@/components/ScrollVideo";
 import { BentoItem, TestimonialCard } from "@/components/BentoGrid";
 
 import ServicesSection from "@/components/ServicesSection";
-import PortfolioSection from "@/components/PortfolioSection";
+import PortfolioSection, { type PortfolioItem } from "@/components/PortfolioSection";
+import PapeleriaSection from "@/components/PapeleriaSection";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import ContactForm from "@/components/ContactForm";
 import StatsSection from "@/components/StatsSection";
@@ -134,66 +135,128 @@ export default function Home() {
   // Portfolio items
   const portfolioFilters = [
     { id: "todos", name: "Todos" },
-    { id: "corporativo", name: "Corporativo" },
-    { id: "retail", name: "Retail / Locales" },
-    { id: "vehicular", name: "Vehicular" },
-    { id: "senaletica", name: "Señalética" },
-    { id: "impresion", name: "Impresos" },
+    { id: "luminosos", name: "Anuncios Luminosos" },
+    { id: "retail", name: "Retail y Exhibidores" },
+    { id: "btl", name: "Activaciones BTL" },
+    { id: "taller", name: "Fabricación en Taller" },
   ];
 
-  const portfolioItems = [
+  const portfolioItems: PortfolioItem[] = [
     {
       id: "p1",
-      filter: "corporativo",
-      title: "Fachada Volumétrica Acrílica",
-      client: "Inmobiliaria Metrópolis",
-      service: "Corte Láser y Letras 3D en Acrílico Espejo",
-      imgSeed: "metropolis-office-facade",
+      filter: "luminosos",
+      title: "Anuncio Luminoso de Fachada",
+      client: "Lacoste",
+      service: "Letras volumétricas de acrílico con iluminación LED frontal",
+      img: "/portafolio/lacoste-anuncio-luminoso-instalado.jpg",
       size: "lg"
     },
     {
       id: "p2",
-      filter: "vehicular",
-      title: "Rotulado de Flotilla de Distribución",
-      client: "Logística Express México",
-      service: "Rotulación Completa con Vinil Automotriz 3M",
-      imgSeed: "delivery-fleet-trucks",
-      size: "md"
+      filter: "taller",
+      title: "Fabricación de Letras 3D",
+      client: "Lacoste",
+      service: "Armado y cableado LED de letras volumétricas en taller",
+      img: "/portafolio/lacoste-letras-3d-taller.jpg",
+      size: "tall"
     },
     {
       id: "p3",
-      filter: "retail",
-      title: "Montaje Visual de Boutique",
-      client: "Moda & Estilo Polanco",
-      service: "Lona Back Light + Cuadros y Fotomurales",
-      imgSeed: "luxury-boutique-display",
-      size: "md"
-    },
-    {
-      id: "p4",
-      filter: "senaletica",
-      title: "Sistema de Evacuación Corporativo",
-      client: "Torre Reforma Corporativos",
-      service: "Señalética Fotoluminiscente de Protección Civil",
-      imgSeed: "office-safety-signage",
+      filter: "luminosos",
+      title: "Letras Corporativas Backlight",
+      client: "Hyundai Glovis",
+      service: "Letras de aluminio con retroiluminación LED halo en recepción",
+      img: "/portafolio/hyundai-glovis-letras-backlight.jpg",
       size: "lg"
     },
     {
+      id: "p4",
+      filter: "retail",
+      title: "Mueble Exhibidor con Lightbox",
+      client: "Samsonite",
+      service: "Estructura metálica iluminada con lona backlight tensada",
+      img: "/portafolio/samsonite-mueble-exhibidor-lightbox.jpg",
+      size: "tall"
+    },
+    {
       id: "p5",
-      filter: "impresion",
-      title: "Catálogos de Lujo 2026",
-      client: "Galería de Arte Contemporáneo CDMX",
-      service: "Impresos Offset con Barniz a Registro 3D",
-      imgSeed: "luxury-art-catalogs",
-      size: "md"
+      filter: "retail",
+      title: "Lightbox de Campaña Upscape",
+      client: "Samsonite",
+      service: "Vinil backlight de alta saturación sobre caja de luz LED",
+      img: "/portafolio/samsonite-lightbox-vinil-backlight.jpg",
+      size: "tall"
     },
     {
       id: "p6",
-      filter: "corporativo",
-      title: "Kit Promocional de Fin de Año",
-      client: "Consultores y Asociados Financieros",
-      service: "Termos Grabados Láser y Regalos Ejecutivos",
-      imgSeed: "corporate-executive-gifts",
+      filter: "btl",
+      title: "Activación de San Valentín",
+      client: "Marinela Barritas",
+      service: "Photo opportunity con neón flexible y gráficos impresos",
+      img: "/portafolio/marinela-barritas-activacion-plaza.jpg",
+      size: "lg"
+    },
+    {
+      id: "p7",
+      filter: "btl",
+      title: "Corazón Neón con Alas 3D",
+      client: "Marinela Barritas",
+      service: "Escultura publicitaria con neón LED y volumetría escenográfica",
+      img: "/portafolio/marinela-barritas-neon-corazon.jpg",
+      size: "tall"
+    },
+    {
+      id: "p8",
+      filter: "taller",
+      title: "Montaje Previo de Escenografía",
+      client: "Marinela Barritas",
+      service: "Fabricación, pintura y prueba de encendido en planta",
+      img: "/portafolio/marinela-barritas-fabricacion-taller.jpg",
+      size: "tall"
+    },
+    {
+      id: "p9",
+      filter: "retail",
+      title: "Isla Exhibidora de Piso",
+      client: "Samsonite",
+      service: "Perfilería negra, entrepaños iluminados y cenefa impresa",
+      img: "/portafolio/samsonite-exhibidor-retail-perfil.jpg",
+      size: "tall"
+    },
+    {
+      id: "p10",
+      filter: "retail",
+      title: "Kiosco de Demostración",
+      client: "Supra · Liverpool",
+      service: "Mobiliario a medida con vinil de corte y gráficos de gran formato",
+      img: "/portafolio/supra-liverpool-kiosco-demostracion.jpg",
+      size: "tall"
+    },
+    {
+      id: "p11",
+      filter: "taller",
+      title: "Letras de Acrílico con Canto Cromo",
+      client: "Deporte Office",
+      service: "Corte láser, pulido de cantos y acabado cromado espejo",
+      img: "/portafolio/deporte-office-letras-acrilico-cromado.jpg",
+      size: "tall"
+    },
+    {
+      id: "p12",
+      filter: "retail",
+      title: "Exhibidor de Plumas en Punto de Venta",
+      client: "Pilot",
+      service: "Rack metálico rotulado con vinil adhesivo de alta fidelidad",
+      img: "/portafolio/pilot-exhibidor-plumas-retail.jpg",
+      size: "md"
+    },
+    {
+      id: "p13",
+      filter: "retail",
+      title: "Exhibidores POP de Cartón",
+      client: "Paper Mate · Sharpie · Command",
+      service: "Suaje, impresión y armado de displays de piso desechables",
+      img: "/portafolio/exhibidores-carton-pop-punto-venta.jpg",
       size: "md"
     }
   ];
@@ -253,6 +316,14 @@ export default function Home() {
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Garantizamos la excelencia mediante nuestro proceso de 5 fases: 1. Asesoría Técnica sobre sustratos y presupuestos; 2. Diseño e Ingeniería (montajes virtuales y adaptación cromática); 3. Producción de Alta Gama en nuestros talleres especializados; 4. Instalación Certificada con personal capacitado; y 5. Seguimiento y Control de Calidad post-entrega bajo nuestro lema y slogan: 'YO LO HAGO POR TI'."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Venden papelería y consumibles de oficina con entrega en CDMX?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. WORLD SERVICES surte papelería y consumibles con entrega de 24 h a 48 h en la Ciudad de México y Zona Metropolitana: lápices, plumas, libretas, carpetas, folders, tóners originales y compatibles para cualquier marca de impresora, además de equipo de cómputo, accesorios, periféricos y cámaras de videoconferencia. Manejamos precio fijo por 12 meses sobre tu lista personalizada y facturación inmediata con CFDI al momento de la entrega."
         }
       },
       {
@@ -341,6 +412,9 @@ export default function Home() {
 
         {/* SERVICIOS ESPECIALIZADOS (Optimized Client Component) */}
         <ServicesSection categories={serviceCategories} services={services} />
+
+        {/* PAPELERÍA Y CONSUMIBLES (Static SSR Render) */}
+        <PapeleriaSection />
 
         {/* PORTAFOLIO INTERACTIVO (Optimized Client Component with Next Image) */}
         <PortfolioSection filters={portfolioFilters} items={portfolioItems} />
@@ -441,6 +515,22 @@ export default function Home() {
                 <div className="mt-4 text-xs text-zinc-600 leading-relaxed border-t border-purple-50 pt-4">
                   <p>
                     Manejamos una amplia versatilidad de materiales según el propósito y la durabilidad requerida. Para exteriores y anuncios de alta resistencia (con hasta 10 años de vida útil), trabajamos con <strong>acrílico cristal y espejo</strong>, paneles de aluminio compuesto (<strong>Alucobond</strong>), aluminio sólido, <strong>Trovicel (PVC espumado)</strong>, <strong>Coroplast</strong> y madera <strong>MDF</strong> ruteada con CNC de alta definición.
+                  </p>
+                </div>
+              </FaqItem>
+
+              <FaqItem question="¿Venden papelería y consumibles de oficina con entrega en CDMX?">
+                <div className="mt-4 text-xs text-zinc-600 leading-relaxed border-t border-purple-50 pt-4 flex flex-col gap-2">
+                  <p>
+                    Sí. Surtimos <strong>papelería y consumibles con entrega de 24 h a 48 h</strong> en la Ciudad de México y Zona Metropolitana:
+                  </p>
+                  <ul className="list-disc pl-5 flex flex-col gap-1 mt-1">
+                    <li><strong>Escritorio y archivo:</strong> lápices, plumas, libretas, carpetas, folders y accesorios de oficina.</li>
+                    <li><strong>Consumibles de impresión:</strong> tóners originales y compatibles para cualquier marca de impresora.</li>
+                    <li><strong>Cómputo y periféricos:</strong> laptops, equipos de escritorio, monitores, teclados, diademas, cables y cámaras de videoconferencia.</li>
+                  </ul>
+                  <p className="mt-1">
+                    Trabajamos con <strong>precio fijo por 12 meses</strong> sobre tu lista personalizada y <strong>facturación inmediata</strong>, entregándote el CFDI al momento de la entrega.
                   </p>
                 </div>
               </FaqItem>

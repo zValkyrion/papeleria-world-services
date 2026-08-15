@@ -3,19 +3,25 @@
 import { useState } from "react";
 import Image from "next/image";
 
+// next/image no antepone el basePath automáticamente (ver docs de basePath),
+// así que lo agregamos igual que en Navbar y layout.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 interface PortfolioFilter {
   id: string;
   name: string;
 }
 
-interface PortfolioItem {
+export interface PortfolioItem {
   id: string;
   filter: string;
   title: string;
   client: string;
   service: string;
-  imgSeed: string;
-  size: string;
+  /** Ruta pública de la fotografía real del proyecto (public/portafolio/...) */
+  img: string;
+  /** "lg" = panorámica a 2 columnas · "tall" = vertical a doble altura · "md" = 1x1 */
+  size: "lg" | "tall" | "md";
 }
 
 interface PortfolioSectionProps {
@@ -44,7 +50,7 @@ export default function PortfolioSection({ filters, items }: PortfolioSectionPro
         </div>
         
         <p className="text-xs text-zinc-600 max-w-sm leading-relaxed">
-          Explora una selección de nuestros proyectos de rotulación corporativa, fachadas rígidas e impresos de alto impacto comercial en México.
+          Fotografías reales de nuestros anuncios luminosos, letras volumétricas, muebles exhibidores y activaciones BTL instalados para marcas líderes en México.
         </p>
       </div>
 
@@ -69,14 +75,15 @@ export default function PortfolioSection({ filters, items }: PortfolioSectionPro
 
       {/* Masonry Bento Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[280px] gap-4 md:gap-5">
-        {filteredPortfolio.map((project, index) => {
-          // Determine grid span based on size and position for irregular layout
-          const isLarge = project.size === "lg";
-          const gridClass = isLarge
-            ? "sm:col-span-2 sm:row-span-1 lg:col-span-2 lg:row-span-1"
-            : index % 5 === 2
-              ? "sm:row-span-2"
-              : "";
+        {filteredPortfolio.map((project) => {
+          // El span se deriva de la orientación real de la fotografía:
+          // panorámicas ocupan 2 columnas, verticales ocupan 2 filas.
+          const gridClass =
+            project.size === "lg"
+              ? "sm:col-span-2 lg:col-span-2"
+              : project.size === "tall"
+                ? "row-span-2"
+                : "";
 
           return (
             <div
@@ -86,10 +93,14 @@ export default function PortfolioSection({ filters, items }: PortfolioSectionPro
               {/* Optimized Next.js Image Component */}
               <div className="absolute inset-0 z-0 transition-transform duration-700 ease-out group-hover:scale-110">
                 <Image
-                  src={`https://picsum.photos/seed/${project.imgSeed}/800/600`}
-                  alt={`Proyecto de ${project.title} para el cliente ${project.client} usando el servicio ${project.service}`}
+                  src={`${basePath}${project.img}`}
+                  alt={`${project.title} para ${project.client}: ${project.service}`}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes={
+                    project.size === "lg"
+                      ? "(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 66vw"
+                      : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  }
                   className="object-cover"
                   loading="lazy"
                 />

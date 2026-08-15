@@ -32,6 +32,7 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
     { name: "Inicio", href: "#inicio" },
     { name: "Nosotros", href: "#nosotros" },
     { name: "Servicios", href: "#servicios" },
+    { name: "Papelería", href: "#papeleria" },
     { name: "Portafolio", href: "#portafolio" },
     { name: "Proceso", href: "#proceso" },
   ];
