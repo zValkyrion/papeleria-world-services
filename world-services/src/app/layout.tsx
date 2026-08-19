@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_SLOGAN,
+  LOCALE,
+  DESCRIPTION,
+  CONTACT,
+  SERVICE_CATALOG,
+  AREA_SERVED,
+  url
+} from "@/lib/site";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
@@ -17,31 +28,45 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WORLD SERVICES | Comunicación Visual, Impresión y Rotulación Premium",
-  description: "Donde la calidad encuentra su propósito. Socio estratégico en México para impresión digital de gran formato, rotulación corporativa y de flotillas, señalética, corte láser y soluciones de branding de alta gama.",
+  // metadataBase resuelve todas las URLs relativas de OG/canonical.
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default:
+      "WORLD SERVICES | Anuncios Luminosos, Rotulación e Impresión Gran Formato CDMX",
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: DESCRIPTION,
+  applicationName: SITE_NAME,
+  generator: "Next.js",
+  category: "Comunicación visual y artes gráficas",
   keywords: [
     "World Services",
     "comunicación visual",
-    "impresión digital",
-    "gran formato",
+    "anuncios luminosos CDMX",
+    "letras volumétricas 3D iluminadas",
+    "letras corporativas backlight",
+    "impresión digital gran formato",
+    "lona front mesh backlight",
     "rotulación de flotillas",
+    "rotulado vehicular vinil 3M",
     "señalética protección civil",
     "corte láser acrílico",
-    "artículos promocionales",
-    "branding corporativo México",
-    "impresión premium",
-    "anuncios volumétricos 3D",
-    "sustratos rígidos",
-    "rotulado vehicular",
+    "alucobond fachadas",
+    "muebles exhibidores retail",
+    "displays POP punto de venta",
+    "activaciones BTL neón",
     "papelería y consumibles CDMX",
     "tóners originales y compatibles",
     "consumibles de oficina entrega 24 horas",
     "equipo de cómputo para oficina",
-    "anuncios luminosos CDMX",
-    "letras volumétricas 3D iluminadas",
-    "muebles exhibidores retail"
+    "artículos promocionales personalizados",
+    "branding corporativo México",
   ],
-  authors: [{ name: "WORLD SERVICES" }],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  referrer: "origin-when-cross-origin",
+  formatDetection: { telephone: true, address: true, email: true },
   robots: {
     index: true,
     follow: true,
@@ -54,34 +79,37 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://worldservices.com.mx",
+    canonical: url("/"),
+    languages: { "es-MX": url("/") },
   },
   openGraph: {
-    title: "WORLD SERVICES | Comunicación Visual e Impresión Premium",
-    description: "Transformamos ideas en experiencias visuales memorables. Impresión de gran formato, rotulación vehicular, señalética normativa y corte láser de alta gama en México.",
-    url: "https://worldservices.com.mx",
-    siteName: "WORLD SERVICES",
-    images: [
-      {
-        url: "https://worldservices.com.mx/logo.png",
-        width: 512,
-        height: 512,
-        alt: "WORLD SERVICES - Comunicación Visual Premium, Impresión Gran Formato y Corte Láser",
-      }
-    ],
-    locale: "es_MX",
+    title:
+      "WORLD SERVICES | Anuncios Luminosos, Rotulación e Impresión Gran Formato",
+    description: DESCRIPTION,
+    url: url("/"),
+    siteName: SITE_NAME,
+    locale: LOCALE,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "WORLD SERVICES | Comunicación Visual e Impresión Premium",
-    description: "Socio estratégico en México para impresión de gran formato, rotulación corporativa, corte láser y señalética normativa de alta gama.",
-    images: ["https://worldservices.com.mx/logo.png"],
-  }
+    title: "WORLD SERVICES | Comunicación Visual e Impresión Premium en CDMX",
+    description:
+      "Anuncios luminosos, letras 3D, gran formato, rotulación de flotillas, señalética y corte láser. Papelería y consumibles con entrega de 24 h a 48 h en CDMX.",
+  },
+  icons: {
+    icon: [{ url: `${basePath}/icon.png`, type: "image/png" }],
+    shortcut: [`${basePath}/favicon.ico`],
+  },
+  manifest: `${basePath}/manifest.webmanifest`,
+  // Se rellena vía env cuando se den de alta las propiedades en Search Console.
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 export const viewport = {
-  themeColor: "#030303",
+  themeColor: "#7c3aed",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -92,50 +120,83 @@ const jsonLdSchema = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://worldservices.com.mx/#organization",
-      "name": "WORLD SERVICES",
-      "url": "https://worldservices.com.mx",
-      "logo": "https://worldservices.com.mx/logo.png",
-      "image": "https://worldservices.com.mx/logo.png",
-      "description": "Socio estratégico en México para impresión digital de gran formato, rotulación corporativa y de flotillas, señalética de protección civil, corte láser y soluciones integrales de branding corporativo.",
-      "slogan": "YO LO HAGO POR TI",
-      "sameAs": []
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        "@id": `${SITE_URL}/#logo`,
+        url: `${SITE_URL}/logo.png`,
+        width: 512,
+        height: 512,
+        caption: SITE_NAME,
+      },
+      image: { "@id": `${SITE_URL}/#logo` },
+      description: DESCRIPTION,
+      slogan: SITE_SLOGAN,
+      email: CONTACT.email,
+      areaServed: AREA_SERVED.map((name) => ({ "@type": "Place", name })),
+      contactPoint: CONTACT.phones.map((p) => ({
+        "@type": "ContactPoint",
+        telephone: p.e164,
+        contactType: "sales",
+        name: p.name,
+        areaServed: "MX",
+        availableLanguage: ["Spanish"],
+      })),
+      sameAs: [],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      description: DESCRIPTION,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      inLanguage: "es-MX",
     },
     {
       "@type": "LocalBusiness",
-      "@id": "https://worldservices.com.mx/#localbusiness",
-      "name": "WORLD SERVICES",
-      "image": "https://worldservices.com.mx/logo.png",
-      "url": "https://worldservices.com.mx",
-      "telephone": "+525615053683",
-      "priceRange": "$$",
-      "address": {
+      "@id": `${SITE_URL}/#localbusiness`,
+      name: SITE_NAME,
+      parentOrganization: { "@id": `${SITE_URL}/#organization` },
+      url: SITE_URL,
+      image: { "@id": `${SITE_URL}/#logo` },
+      description: DESCRIPTION,
+      slogan: SITE_SLOGAN,
+      email: CONTACT.email,
+      telephone: CONTACT.phones[0].e164,
+      priceRange: "$$",
+      currenciesAccepted: "MXN",
+      address: {
         "@type": "PostalAddress",
-        "streetAddress": "CDMX y Cobertura Nacional",
-        "addressLocality": "Ciudad de México",
-        "addressRegion": "CDMX",
-        "postalCode": "01000",
-        "addressCountry": "MX"
+        addressLocality: CONTACT.city,
+        addressRegion: CONTACT.region,
+        addressCountry: CONTACT.country,
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 19.4326077,
-        "longitude": -99.133208
-      },
-      "openingHoursSpecification": {
+      areaServed: AREA_SERVED.map((name) => ({ "@type": "Place", name })),
+      openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "opens": "09:00",
-        "closes": "18:00"
-      }
-    }
-  ]
+        dayOfWeek: [...CONTACT.openingHours.days],
+        opens: CONTACT.openingHours.opens,
+        closes: CONTACT.openingHours.closes,
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Servicios de comunicación visual y consumibles",
+        itemListElement: SERVICE_CATALOG.map((s) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: s.name,
+            description: s.description,
+            provider: { "@id": `${SITE_URL}/#organization` },
+            areaServed: [...AREA_SERVED],
+          },
+        })),
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -145,7 +206,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="es"
+      lang="es-MX"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       style={{ colorScheme: "light" }}
     >

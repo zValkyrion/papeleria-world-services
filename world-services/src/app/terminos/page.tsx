@@ -1,9 +1,42 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { SITE_URL, SITE_NAME, url } from "@/lib/site";
+
+const TITLE = "Términos y Condiciones";
+const DESC =
+  "Términos y condiciones de uso y contratación de WORLD SERVICES para servicios de impresión de gran formato, rotulación, anuncios luminosos, señalética y corte láser en México.";
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESC,
+  alternates: { canonical: url("/terminos") },
+  openGraph: {
+    title: `${TITLE} | ${SITE_NAME}`,
+    description: DESC,
+    url: url("/terminos"),
+    siteName: SITE_NAME,
+    locale: "es_MX",
+    type: "article",
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE_URL}/` },
+    { "@type": "ListItem", position: 2, name: TITLE, item: url("/terminos") },
+  ],
+};
 
 export default function Terminos() {
   return (
     <div className="relative min-h-screen bg-white text-[#120830] overflow-hidden flex flex-col justify-between">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Background Glow Details */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-purple-200/20 rounded-full blur-[150px] pointer-events-none z-0" />
       <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-orange-200/10 rounded-full blur-[130px] pointer-events-none z-0" />

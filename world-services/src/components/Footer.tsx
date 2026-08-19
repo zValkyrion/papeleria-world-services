@@ -54,8 +54,10 @@ export default function Footer() {
                 { name: "Inicio", href: "#inicio" },
                 { name: "Sobre Nosotros", href: "#nosotros" },
                 { name: "Servicios", href: "#servicios" },
+                { name: "Papelería y Consumibles", href: "#papeleria" },
                 { name: "Portafolio", href: "#portafolio" },
                 { name: "Proceso de Trabajo", href: "#proceso" },
+                { name: "Preguntas Frecuentes", href: "#faq" },
               ].map((link) => (
                 <a
                   key={link.name}

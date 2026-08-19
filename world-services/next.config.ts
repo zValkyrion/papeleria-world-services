@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
-const isProd = process.env.NODE_ENV === "production";
-const basePath = isProd ? "/papeleria-world-services" : "";
+// Con dominio propio (public/CNAME) GitHub Pages sirve el sitio desde la raíz,
+// así que basePath queda vacío y los canonicals coinciden con la URL real.
+// Se deja override por si se necesita publicar bajo un subdirectorio de github.io.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const nextConfig: NextConfig = {
   output: "export",
@@ -18,4 +20,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-

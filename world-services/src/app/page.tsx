@@ -7,9 +7,10 @@ import { BentoItem, TestimonialCard } from "@/components/BentoGrid";
 
 import ServicesSection from "@/components/ServicesSection";
 import PortfolioSection, { type PortfolioItem } from "@/components/PortfolioSection";
+import { SITE_URL } from "@/lib/site";
 import PapeleriaSection from "@/components/PapeleriaSection";
 import ProcessTimeline from "@/components/ProcessTimeline";
-import ContactForm from "@/components/ContactForm";
+import ContactSection from "@/components/ContactSection";
 import StatsSection from "@/components/StatsSection";
 import { FaqItem } from "@/components/FaqAccordion";
 
@@ -290,9 +291,32 @@ export default function Home() {
     }
   ];
 
+  // El portafolio real alimenta un ImageGallery para que las fotos entren a
+  // Google Imágenes con su contexto de marca y servicio.
+  const portfolioSchema = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "@id": `${SITE_URL}/#portafolio`,
+    "name": "Portafolio de anuncios luminosos, exhibidores y activaciones",
+    "description":
+      "Fotografías reales de anuncios luminosos, letras volumétricas, muebles exhibidores y activaciones BTL fabricados e instalados por WORLD SERVICES en México.",
+    "isPartOf": { "@id": `${SITE_URL}/#website` },
+    "associatedMedia": portfolioItems.map((item) => ({
+      "@type": "ImageObject",
+      "contentUrl": `${SITE_URL}${item.img}`,
+      "name": `${item.title} — ${item.client}`,
+      "description": item.service,
+      "creditText": "WORLD SERVICES",
+      "creator": { "@id": `${SITE_URL}/#organization` }
+    }))
+  };
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": `${SITE_URL}/#faq`,
+    "inLanguage": "es-MX",
+    "isPartOf": { "@id": `${SITE_URL}/#website` },
     "mainEntity": [
       {
         "@type": "Question",
@@ -339,10 +363,14 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-white text-[#120830] overflow-hidden">
-      {/* JSON-LD Schema FAQ for search engines and AI bots */}
+      {/* JSON-LD: FAQ + galería de portafolio para buscadores y bots de IA */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(portfolioSchema) }}
       />
 
       {/* Global Glow Details */}
@@ -546,8 +574,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FORMULARIO INTELIGENTE Y CONTACTO (Optimized Client Component) */}
-        <ContactForm />
+        {/* CONTACTO DIRECTO (Static SSR Render) */}
+        <ContactSection />
 
       </main>
 
