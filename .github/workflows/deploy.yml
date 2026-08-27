@@ -36,6 +36,11 @@ jobs:
 
       - name: Build static site
         run: npm run build:ci
+        env:
+          # El sitio se publica en zvalkyrion.github.io/papeleria-world-services/,
+          # así que los assets tienen que colgar de esa subruta y no de la raíz.
+          # Si algún día worldservices.com.mx apunta a GitHub Pages, se borra esta línea.
+          NEXT_PUBLIC_BASE_PATH: /papeleria-world-services
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
