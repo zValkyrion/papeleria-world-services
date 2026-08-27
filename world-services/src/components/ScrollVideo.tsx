@@ -83,7 +83,12 @@ export default function ScrollVideo({ zoom = 1.0, mobileZoom = 0.5 }: ScrollVide
     // If the user has already scrolled past the hero section (progress 1),
     // do not trigger auto‑scroll. This prevents the page from jumping back
     // to the hero when the user is viewing other modules.
-    if (progressVal >= 1) {
+    //
+    // El progreso viene suavizado por el scrub, así que tras un salto
+    // programático (los botones del menú hacia #contacto o #portafolio)
+    // todavía puede leerse < 1 estando ya lejos del hero, y el auto‑scroll
+    // se llevaba la página de vuelta. La posición real es el dato confiable.
+    if (progressVal >= 1 || window.scrollY >= scrollTrigger.end) {
       return;
     }
 
