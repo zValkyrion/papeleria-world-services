@@ -58,13 +58,26 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
     }
   };
 
+  // Estando en la portada se hace scroll en vez de recargar: el hero fija el
+  // video con GSAP y estira la página después del load, así que un salto por
+  // ancla recién cargada aterriza en el lugar equivocado.
+  const goToSection = (hash: string) => {
+    if (typeof window === "undefined") return;
+    if (isHome()) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+    }
+    window.location.href = `${basePath}/${hash}`;
+  };
+
   const handleQuoteClick = () => {
     if (onQuoteClick) {
       onQuoteClick();
     } else {
-      if (typeof window !== "undefined") {
-        window.location.href = `${basePath}/#contacto`;
-      }
+      goToSection("#contacto");
     }
   };
 
@@ -72,9 +85,7 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
     if (onPortfolioClick) {
       onPortfolioClick();
     } else {
-      if (typeof window !== "undefined") {
-        window.location.href = `${basePath}/#portafolio`;
-      }
+      goToSection("#portafolio");
     }
   };
 
