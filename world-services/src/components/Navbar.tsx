@@ -45,31 +45,32 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
     return path === `${basePath}/` || path === (basePath || "/");
   };
 
+  // El salto es directo, no suave: el hero fija el video con ScrollTrigger y
+  // su snap (0, 0.5, 1) captura cualquier scroll suave que cruce el rango del
+  // pin, dejándolo pegado en el video. Yendo de golpe se sale del rango.
+  const scrollToHash = (hash: string) => {
+    const element = document.querySelector(hash);
+    if (!element) return false;
+    element.scrollIntoView({ behavior: "auto", block: "start" });
+    return true;
+  };
+
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (isHome()) {
       e.preventDefault();
       setIsOpen(false);
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+      scrollToHash(href);
     } else {
       setIsOpen(false);
     }
   };
 
-  // Estando en la portada se hace scroll en vez de recargar: el hero fija el
-  // video con GSAP y estira la página después del load, así que un salto por
-  // ancla recién cargada aterriza en el lugar equivocado.
+  // Estando en la portada se hace scroll en vez de recargar: al recargar, el
+  // hero estira la altura de la página después del load y el salto por ancla
+  // aterriza en el lugar equivocado.
   const goToSection = (hash: string) => {
     if (typeof window === "undefined") return;
-    if (isHome()) {
-      const element = document.querySelector(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        return;
-      }
-    }
+    if (isHome() && scrollToHash(hash)) return;
     window.location.href = `${basePath}/${hash}`;
   };
 
