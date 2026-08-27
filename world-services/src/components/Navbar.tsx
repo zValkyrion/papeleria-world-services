@@ -45,13 +45,47 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
     return path === `${basePath}/` || path === (basePath || "/");
   };
 
-  // El salto es directo, no suave: el hero fija el video con ScrollTrigger y
-  // su snap (0, 0.5, 1) captura cualquier scroll suave que cruce el rango del
-  // pin, dejándolo pegado en el video. Yendo de golpe se sale del rango.
+  // El hero fija el video con ScrollTrigger y define snap en 0, 0.5 y 1 dentro
+  // del rango del pin. Eso obliga a dos cosas:
+  //
+  // 1. El salto es directo, no suave: el snap captura cualquier scroll suave
+  //    que cruce el rango del pin y lo deja pegado en el video.
+  // 2. Hay que sostener el destino un momento. Tras un salto largo el scrub
+  //    todavía viene alcanzando su valor, así que el snap dispara igual y se
+  //    llevaba la página de vuelta al final del video (2 s de animación).
+  //
+  // Se suelta en cuanto el usuario mueve el scroll, para no pelear con él.
+  const SNAP_HOLD_MS = 2600;
+
   const scrollToHash = (hash: string) => {
     const element = document.querySelector(hash);
     if (!element) return false;
-    element.scrollIntoView({ behavior: "auto", block: "start" });
+
+    const jump = () => element.scrollIntoView({ behavior: "auto", block: "start" });
+    jump();
+
+    const events: (keyof WindowEventMap)[] = ["wheel", "touchstart", "keydown"];
+    const deadline = Date.now() + SNAP_HOLD_MS;
+    let holding = true;
+
+    const release = () => {
+      holding = false;
+      events.forEach((name) => window.removeEventListener(name, release));
+    };
+
+    events.forEach((name) => window.addEventListener(name, release, { passive: true }));
+
+    const hold = () => {
+      if (!holding) return;
+      if (Date.now() >= deadline) {
+        release();
+        return;
+      }
+      jump();
+      requestAnimationFrame(hold);
+    };
+
+    requestAnimationFrame(hold);
     return true;
   };
 
