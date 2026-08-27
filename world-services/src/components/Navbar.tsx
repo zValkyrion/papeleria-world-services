@@ -37,8 +37,16 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
     { name: "Proceso", href: "#proceso" },
   ];
 
+  // En GitHub Pages el sitio cuelga de /papeleria-world-services/, así que la
+  // portada no vive en "/" y hay que comparar contra el basePath.
+  const isHome = () => {
+    if (typeof window === "undefined") return false;
+    const path = window.location.pathname;
+    return path === `${basePath}/` || path === (basePath || "/");
+  };
+
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (typeof window !== "undefined" && window.location.pathname === "/") {
+    if (isHome()) {
       e.preventDefault();
       setIsOpen(false);
       const element = document.querySelector(href);
@@ -55,7 +63,7 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
       onQuoteClick();
     } else {
       if (typeof window !== "undefined") {
-        window.location.href = "/#contacto";
+        window.location.href = `${basePath}/#contacto`;
       }
     }
   };
@@ -65,7 +73,7 @@ export default function Navbar({ onQuoteClick, onPortfolioClick }: NavbarProps) 
       onPortfolioClick();
     } else {
       if (typeof window !== "undefined") {
-        window.location.href = "/#portafolio";
+        window.location.href = `${basePath}/#portafolio`;
       }
     }
   };
